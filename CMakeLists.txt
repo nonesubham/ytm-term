@@ -11,7 +11,7 @@ set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/includes")
 set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # --- Collect sources ---------------------------------------------------------
-file(GLOB_RECURSE HEADERS "${INC_DIR}/*.h" "${INC_DIR}/*.hpp")
+file(GLOB_RECURSE HEADERS "${INC_DIR}/*.hh" "${INC_DIR}/*.hpp")
 file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp")
 
 # --- Create executable -------------------------------------------------------
