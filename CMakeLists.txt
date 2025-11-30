@@ -18,7 +18,7 @@ file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp")
 add_executable(ytm-term ${SOURCES} ${HEADERS})
 
 # --- Include directories -----------------------------------------------------
-target_include_directories(ytm-term PRIVATE ${INC_DIR})
+target_include_directories(ytm-term PUBLIC ${INC_DIR})
 
 # --- Compiler-specific flags -------------------------------------------------
 if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")

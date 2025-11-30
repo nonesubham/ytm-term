@@ -1,35 +1,29 @@
-#include <string>
+#pragma once
+
 #include <vector>
+#include <utility> 
+#include <string>
 
-// Playlist interface doesn't make sense at this project that's why concrete class
-
-class PlaylistHandler {
+class Playlist {
 private:
     std::vector<std::pair<std::string, std::string>> tracks;
-    int currentIndex = 0;
-    
-public:
-    void loadPlaylist(const std::vector<std::pair<std::string, std::string>>& playlistTracks) {
-        tracks = playlistTracks;
-        currentIndex = 0;
-    }
-    
-    std::pair<std::string, std::string> next() {
-        if (currentIndex < tracks.size() - 1) currentIndex++;
-        return tracks[currentIndex];
-    }
-    
-    std::pair<std::string, std::string> previous() {
-        if (currentIndex > 0) currentIndex--;
-        return tracks[currentIndex];
-    }
+    int currentIndex;
 
-        std::pair<std::string, std::string> select(const int & toIndex) {
-        currentIndex = toIndex;
-        return tracks[currentIndex];
-    }
+public:
+   
+    Playlist(const std::vector<std::pair<std::string, std::string>>& playlistTracks);
     
-    std::pair<std::string, std::string> current() const {
-        return tracks[currentIndex];
-    }
+ 
+    std::pair<std::string, std::string> next();
+    std::pair<std::string, std::string> previous();
+    std::pair<std::string, std::string> select(const int& toIndex);
+    std::pair<std::string, std::string> current() const;
+    void appendTrack(std::pair<std::string, std::string> track);
+    void appendPlaylist(std::vector<std::pair<std::string, std::string>> plist);    
+
+    size_t size() const;
+    int getCurrentIndex() const;
+    bool isEmpty() const;
+
 };
+

@@ -9,6 +9,4 @@ public:
     virtual std::string extractAudioURL(const std::string& url) = 0;
 
     virtual std::vector<std::pair<std::string, std::string>> extractPlaylist(const std::string& url) = 0;
-    
-    virtual bool supports(const std::string& url) const = 0;
 };

@@ -149,3 +149,35 @@
 
 
 
+#include <iostream>
+#include "ytm-term/Playlist.hh"
+
+int main() {
+
+    std::vector<std::pair<std::string, std::string>> tracks = {
+        {"Song 1", "Artist 1"},
+        {"Song 2", "Artist 2"},
+        {"Song 3", "Artist 3"},
+        {"Song 4", "Artist 4"},
+        {"Song 5", "Artist 5"}
+    };
+        std::vector<std::pair<std::string, std::string>> tracks2 = {
+        {"Song 1", "Artist 1"},
+        {"Song 2", "Artist 2"},
+        {"Song 3", "Artist 3"},
+        {"Song 4", "Artist 4"},
+        {"Song 5", "Artist 5"}
+    };
+
+
+    Playlist* plylst = new Playlist(tracks); 
+   plylst->appendPlaylist(tracks2);
+    for (size_t i = 0; i < plylst->size(); ++i) {
+        auto track = plylst->select(i);
+        std::cout << "Track " << i << ": "
+                  << track.first << " by " << track.second << std::endl;
+    }
+    
+    
+    return 0;
+}
