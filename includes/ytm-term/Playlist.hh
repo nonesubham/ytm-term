@@ -19,7 +19,8 @@ public:
     std::pair<std::string, std::string> select(const int& toIndex);
     std::pair<std::string, std::string> current() const;
     void appendTrack(std::pair<std::string, std::string> track);
-    void appendPlaylist(std::vector<std::pair<std::string, std::string>> plist);    
+    void appendPlaylist(std::vector<std::pair<std::string, std::string>> plist);  
+    void remove(int& indx);  
 
     size_t size() const;
     int getCurrentIndex() const;

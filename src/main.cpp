@@ -155,29 +155,38 @@
 int main() {
 
     std::vector<std::pair<std::string, std::string>> tracks = {
-        {"Song 1", "Artist 1"},
-        {"Song 2", "Artist 2"},
-        {"Song 3", "Artist 3"},
-        {"Song 4", "Artist 4"},
-        {"Song 5", "Artist 5"}
+        {"Song 01", "Artist 01"},
+        {"Song 02", "Artist 02"},
+        {"Song 03", "Artist 03"},
+        {"Song 04", "Artist 04"},
+        {"Song 05", "Artist 05"}
     };
         std::vector<std::pair<std::string, std::string>> tracks2 = {
-        {"Song 1", "Artist 1"},
-        {"Song 2", "Artist 2"},
-        {"Song 3", "Artist 3"},
-        {"Song 4", "Artist 4"},
-        {"Song 5", "Artist 5"}
+        {"Song 06", "Artist 06"},
+        {"Song 07", "Artist 07"},
+        {"Song 08", "Artist 08"},
+        {"Song 09", "Artist 09"},
+        {"Song 10", "Artist 10"}
     };
 
 
     Playlist* plylst = new Playlist(tracks); 
+
    plylst->appendPlaylist(tracks2);
+
     for (size_t i = 0; i < plylst->size(); ++i) {
         auto track = plylst->select(i);
-        std::cout << "Track " << i << ": "
+        std::cout << "Track " << i+1 << ": "
                   << track.first << " by " << track.second << std::endl;
     }
-    
+    std::cout<<"\n breaking \n\n";
+    int br = 9;
+    plylst->remove(br);
+        for (size_t i = 0; i < plylst->size(); ++i) {
+        auto track = plylst->select(i);
+        std::cout << "Track " << i+1 << ": "
+                  << track.first << " by " << track.second << std::endl;
+    }
     
     return 0;
 }

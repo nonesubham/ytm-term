@@ -70,7 +70,19 @@ bool Playlist::isEmpty() const {
 void Playlist::appendTrack(std::pair<std::string, std::string> track){
 tracks.push_back(std::move(track));
 }
- void Playlist::appendPlaylist(std::vector<std::pair<std::string, std::string>> plist){
+
+
+void Playlist::appendPlaylist(std::vector<std::pair<std::string, std::string>> plist){
     tracks.reserve(tracks.size() + plist.size());
     tracks.insert(tracks.end(), std::make_move_iterator(plist.begin()), std::make_move_iterator(plist.end()));
  }
+
+void Playlist::remove(int& indx){
+    if (tracks.empty()) {
+        throw std::runtime_error("Playlist is empty");
+    }
+    if (indx > static_cast<int>(tracks.size())) {
+        throw std::runtime_error("Invalid track index");
+    }
+    tracks.erase(tracks.begin()+indx);
+}
