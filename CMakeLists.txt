@@ -1,29 +1,57 @@
-cmake_minimum_required(VERSION 3.16)
-project(ytm-term LANGUAGES CXX)
+cmake_minimum_required(VERSION 3.20)
+project(ytm-term VERSION 1.0.0 LANGUAGES CXX)
 
-# --- Options -----------------------------------------------------------------
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# --- Directories -------------------------------------------------------------
-set(INC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/includes")
-set(SRC_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src")
+# ── Dependencies ──────────────────────────────────────────────────────────────
 
-# --- Collect sources ---------------------------------------------------------
-file(GLOB_RECURSE HEADERS "${INC_DIR}/*.hh" "${INC_DIR}/*.hpp")
-file(GLOB_RECURSE SOURCES "${SRC_DIR}/*.cpp")
+# FTXUI ships CMake config files
+find_package(ftxui REQUIRED COMPONENTS component dom screen)
 
-# --- Create executable -------------------------------------------------------
-add_executable(ytm-term ${SOURCES} ${HEADERS})
+# mpv — MSYS2 UCRT64: mingw-w64-ucrt-x86_64-mpv
+find_path(MPV_INCLUDE_DIR
+  NAMES client.h
+  PATHS "client.h"
+  PATH_SUFFIXES mpv
+)
 
-# --- Include directories -----------------------------------------------------
-target_include_directories(ytm-term PUBLIC ${INC_DIR})
+find_library(MPV_LIBRARY
+  NAMES mpv libmpv
+  PATHS "${CMAKE_CURRENT_SOURCE_DIR}"
+)
 
-# --- Compiler-specific flags -------------------------------------------------
-if(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
-    target_compile_options(ytm-term PRIVATE -Wall -Wextra -Wpedantic)
+if(NOT MPV_INCLUDE_DIR OR NOT MPV_LIBRARY)
+  find_package(PkgConfig REQUIRED)
+  pkg_check_modules(MPV REQUIRED mpv)
+  set(MPV_INCLUDE_DIR "${MPV_INCLUDE_DIRS}")
+  set(MPV_LIBRARY "${MPV_LIBRARIES}")
 endif()
 
-# --- Installation (optional) -------------------------------------------------
-install(TARGETS ytm-term DESTINATION bin)
+# ── Sources ───────────────────────────────────────────────────────────────────
+
+set(SOURCES
+  src/main.cc
+)
+
+# ── Executable ────────────────────────────────────────────────────────────────
+
+add_executable(ytm-term ${SOURCES})
+
+target_include_directories(ytm-term PRIVATE
+  ${MPV_INCLUDE_DIR}
+  src
+)
+
+target_link_libraries(ytm-term PRIVATE
+  ${MPV_LIBRARY}
+  ftxui::component
+  ftxui::dom
+  ftxui::screen
+  stdc++exp
+)
+
+# ── Install ───────────────────────────────────────────────────────────────────
+
+install(TARGETS ytm-term RUNTIME DESTINATION bin)
