@@ -1,3 +1,6 @@
+
+// Test code to verify library installation
+
 // #include <mpv/client.h>
 // #include <ftxui/dom/elements.hpp>
 // #include <ftxui/screen/screen.hpp>
@@ -19,3 +22,10 @@
 //   return 0;
 // }
 //
+
+#include <print>
+
+int main(void){
+    std::print("i am small pea!!");
+    return 0;
+}
